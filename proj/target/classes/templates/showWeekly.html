@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orar</title>
+  <style>
+                  body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+              background: url('https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/387507936_312939314886790_1301291974383262452_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=zlj2C0iFxRgAX_h-emV&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTIngEyQZO1ULAVqtAc1DOKCQxxl6zfnlsMKNZY0k2bZA&oe=65C36FC1');
+            background-repeat: repeat;
+            background-size: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+        }
+    table {
+      width: 95%;
+      height: 80%;
+      border-collapse: collapse;
+      margin-top: 0px;
+
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+
+    }
+
+    th {
+      background-color:#1F3607;
+      color:#FFFFFF;
+      font-weight: bold;
+    }
+
+    td {
+      font-weight: 500;
+       background-color:rgba(66, 87, 33, 0.7);
+       color:#FFFFFF;
+    }
+
+    td:first-child {
+      font-weight: bold;
+        background-color:#1F3607;
+       color:#FFFFFF;
+    }
+            button {
+                position: fixed;
+                padding: 15px 25px;
+                font-size: 16px;
+                background-color:#1F3607;
+                color: white;
+                border: none;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            button:hover {
+            background-color: #3B5F24;
+            }
+
+    </style>
+</head>
+<body>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Ziua</th>
+    <!-- Coloane pentru ore -->
+    <th>08:00-10:00</th>
+    <th>10:00-12:00</th>
+    <th>12:00-14:00</th>
+    <th>14:00-16:00</th>
+    <th>16:00-18:00</th>
+    <th>18:00-20:00</th>
+    <th>Altele</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Luni</td>
+    <td></td> <!-- Câmp pentru alte activități -->
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <!-- Continuă pentru celelalte zile ale săptămânii -->
+  <tr>
+    <td>Marti</td>
+    <td></td> <!-- Câmp pentru alte activități -->
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Miercuri</td>
+    <td></td> <!-- Câmp pentru alte activități -->
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Joi</td>
+    <td></td> <!-- Câmp pentru alte activități -->
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Vineri</td>
+    <td></td> <!-- Câmp pentru alte activități -->
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Sambata</td>
+    <td></td> <!-- Câmp pentru alte activități -->
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Duminica</td>
+    <td></td> <!-- Câmp pentru alte activități -->
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  </tbody>
+
+</table>
+
+
+<button onclick="deleteSelectedCells()" style="bottom: 20px; right: 30px;">Sterge</button>
+<script>
+  function dayToRow(day) {
+    switch (day) {
+      case 'Luni':
+        return 1;
+      case 'Marti':
+        return 2;
+      case 'Miercuri':
+        return 3;
+      case 'Joi':
+        return 4;
+      case 'Vineri':
+        return 5;
+      case 'Sambata':
+        return 6;
+      case 'Duminica':
+        return 7;
+      default:
+        return 9;
+    }
+  }
+
+function timeToColumn(hour) {
+  const hourMap = {
+    '08:00-10:00': 2,
+    '10:00-12:00': 3,
+    '12:00-14:00': 4,
+    '14:00-16:00': 5,
+    '16:00-18:00': 6,
+    '18:00-20:00': 7,
+  };
+
+  const hourToCheck = parseInt(hour.split(':')[0]);
+
+  for (const key in hourMap) {
+    if (hourMap.hasOwnProperty(key)) {
+      const interval = key.split('-');
+      const startHour = parseInt(interval[0].split(':')[0]);
+      const endHour = parseInt(interval[1].split(':')[0]);
+
+      if (hourToCheck >= startHour && hourToCheck < endHour) {
+        return hourMap[key];
+      }
+    }
+  }
+
+  return 8; // Dacă nu se potrivește în niciun interval, se va plasa în "Altele"
+}
+
+
+function clearTable() {
+  const tableRows = document.querySelectorAll('tbody tr');
+
+  tableRows.forEach(row => {
+    const cellsInRow = row.querySelectorAll('td');
+    for (let i = 1; i < cellsInRow.length; i++) {
+      cellsInRow[i].textContent = '';
+    }
+  });
+}
+
+  function populateTable(weeklyData) {
+  clearTable();
+    weeklyData.forEach(item => {
+      const row = dayToRow(item.day);
+      const column = timeToColumn(item.hour);
+
+      let cell;
+      if (column !== 8) {
+        cell = document.querySelector(`tbody tr:nth-child(${row}) td:nth-child(${column})`);
+      } else {
+        cell = document.querySelector(`tbody tr:nth-child(${row}) td:last-child`);
+      }
+
+      if (cell) {
+        if (cell.textContent.trim() !== '') {
+          cell.textContent += ' | ' + item.text + '\n'; // Adăugăm bara ca separator
+        } else {
+          cell.textContent += item.text + '\n';
+        }
+      }
+    });
+  }
+
+
+  function fetchWeeklyData() {
+
+    fetch('/getTableData')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then(data => {
+        populateTable(data);
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    fetchWeeklyData();
+  });
+
+
+
+  let selectedCells = []; // Array pentru a ține evidența celulelor selectate
+
+  function toggleSelection(cell) {
+    if (!selectedCells.includes(cell)) {
+      selectedCells.push(cell);
+      cell.style.backgroundColor = 'green'; // Selectează celula
+    } else {
+      selectedCells = selectedCells.filter(selectedCell => selectedCell !== cell);
+      cell.style.backgroundColor = ''; // Deselectează celula
+    }
+  }
+
+function deleteSelectedCells() {
+  const dataToDelete = [];
+  selectedCells.forEach(cell => {
+    const row = cell.parentNode.rowIndex ; // Obține indexul rândului și ajustează pentru că începe de la 0
+    const day = document.querySelector(`tbody tr:nth-child(${row}) td:first-child`).textContent; // Obține numele zilei
+
+    const column = cell.cellIndex; // Obține indexul coloanei
+    const headerCell = document.querySelector(`thead tr th:nth-child(${column + 1})`); // Găsește celula antetului din coloana respectivă
+    const headerValue = String(headerCell.textContent); // Obține valoarea antetului
+
+    const text = String(cell.textContent.trim());
+    const image = String(" ");
+
+    // Crează un obiect Weekly și adaugă-l în array-ul dataToDelete
+    const weeklyData = {
+      day: day,
+      text: text,
+      image: image,
+      hour: headerValue // folosește 'headerValue' în loc de 'hour'
+    };
+    dataToDelete.push(weeklyData); // Adaugă obiectul în array-ul dataToDelete
+  });
+
+  // Trimite datele către backend doar dacă există date de șters
+  if (dataToDelete.length > 0) {
+    fetch('/deleteCell', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToDelete), // Trimite lista de obiecte Weekly
+    })
+      .then(response => {
+        if (response.ok) {
+          // Șterge conținutul celulelor
+          selectedCells.forEach(cell => {
+            cell.textContent = '';
+          });
+          window.location.reload();
+          selectedCells = [];
+        } else {
+          throw new Error('Network response was not ok.');
+        }
+      })
+
+  }
+}
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    fetchWeeklyData();
+
+    document.querySelectorAll('td').forEach(cell => {
+      cell.addEventListener('click', () => {
+        toggleSelection(cell);
+      });
+    });
+
+
+   document.body.appendChild(button);
+  });
+
+
+</script>
+</body>
+</html>

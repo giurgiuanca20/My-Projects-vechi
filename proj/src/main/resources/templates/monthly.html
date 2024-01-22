@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lunar</title>
+    <style>
+      body {
+        background: url('https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/387507936_312939314886790_1301291974383262452_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=zlj2C0iFxRgAX_h-emV&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTIngEyQZO1ULAVqtAc1DOKCQxxl6zfnlsMKNZY0k2bZA&oe=65C36FC1');
+        background-repeat: repeat;
+        background-size: 300px;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 4rem;
+      }
+      .square {
+        width: 110px;
+        height: 110px;
+        background-color: rgba(31, 54, 23, 0.9);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 30px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 15px; /* Adaugă border-radius pentru a rotunji colțurile */
+      }
+      .square {
+        border: 5px solid transparent; /* Adaugă un border inițial transparent */
+        box-sizing: border-box;
+      }
+      .month {
+        font-size: 28px;
+        font-weight: bold;
+        padding-top: 40px;
+        color: white;
+      }
+    </style>
+</head>
+<body>
+<div class="month" id="currentMonth"></div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 2rem; padding: 4rem; padding-top: 1.5rem; padding-bottom:1rem;">
+    <div class="square" onclick="sendSquareNumber('1')">1</div>
+    <div class="square" onclick="sendSquareNumber('2')">2</div>
+    <div class="square" onclick="sendSquareNumber('3')">3</div>
+    <div class="square" onclick="sendSquareNumber('4')">4</div>
+    <div class="square" onclick="sendSquareNumber('5')">5</div>
+    <div class="square" onclick="sendSquareNumber('6')">6</div>
+    <div class="square" onclick="sendSquareNumber('7')">7</div>
+    <div class="square" onclick="sendSquareNumber('8')">8</div>
+    <div class="square" onclick="sendSquareNumber('9')">9</div>
+    <div class="square" onclick="sendSquareNumber('10')">10</div>
+    <div class="square" onclick="sendSquareNumber('11')">11</div>
+    <div class="square" onclick="sendSquareNumber('12')">12</div>
+    <div class="square" onclick="sendSquareNumber('13')">13</div>
+    <div class="square" onclick="sendSquareNumber('14')">14</div>
+    <div class="square" onclick="sendSquareNumber('15')">15</div>
+    <div class="square" onclick="sendSquareNumber('16')">16</div>
+    <div class="square" onclick="sendSquareNumber('17')">17</div>
+    <div class="square" onclick="sendSquareNumber('18')">18</div>
+    <div class="square" onclick="sendSquareNumber('19')">19</div>
+    <div class="square" onclick="sendSquareNumber('20')">20</div>
+    <div class="square" onclick="sendSquareNumber('21')">21</div>
+    <div class="square" onclick="sendSquareNumber('22')">22</div>
+    <div class="square" onclick="sendSquareNumber('23')">23</div>
+    <div class="square" onclick="sendSquareNumber('24')">24</div>
+    <div class="square" onclick="sendSquareNumber('25')">25</div>
+    <div class="square" onclick="sendSquareNumber('26')">26</div>
+    <div class="square" onclick="sendSquareNumber('27')">27</div>
+    <div class="square" onclick="sendSquareNumber('28')">28</div>
+    <div class="square" onclick="sendSquareNumber('29')">29</div>
+    <div class="square" onclick="sendSquareNumber('30')">30</div>
+    <div class="square" onclick="sendSquareNumber('31')">31</div>
+</div>
+
+</div>
+
+<script>
+      // Obține elementele din document
+      let squares = document.getElementsByClassName("square");
+      let inputBox = document.getElementById("inputBox");
+      let dayName = document.getElementById("dayName");
+      let inputText = document.getElementById("inputText");
+      let inputColor = document.getElementById("inputColor");
+      let currentMonth = document.getElementById("currentMonth");
+
+      // Setează numele lunii curente
+      let date = new Date();
+      let monthNames = [
+        "Ianuarie",
+        "Februarie",
+        "Martie",
+        "Aprilie",
+        "Mai",
+        "Iunie",
+        "Iulie",
+        "August",
+        "Septembrie",
+        "Octombrie",
+        "Noiembrie",
+        "Decembrie",
+      ];
+      currentMonth.textContent =
+        monthNames[date.getMonth()] + " " + date.getFullYear();
+
+
+      let squaresData = {};
+function sendSquareNumber(number) {
+
+    fetch('/saveSquare', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(number)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Data a fost trimisă către server.');
+            window.location.href = "addMonthly";
+        } else {
+            console.error('Eroare la trimiterea datei către server.');
+        }
+    })
+    .catch(error => {
+        console.error('Eroare:', error);
+    });
+}
+
+
+window.onpageshow = function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+};
+
+window.onload = function() {
+    fetch('/getColorList')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(color => {
+                let square = document.querySelector(`.square:nth-child(${color.nrDay})`);
+                if (square) {
+                    square.style.borderTopColor = color.color;
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Eroare:', error);
+        });
+}
+
+
+    </script>
+</body>
+</html>

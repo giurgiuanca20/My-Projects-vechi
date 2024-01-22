@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Choice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/387507936_312939314886790_1301291974383262452_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=zlj2C0iFxRgAX_h-emV&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTIngEyQZO1ULAVqtAc1DOKCQxxl6zfnlsMKNZY0k2bZA&oe=65C36FC1');
+            background-repeat: repeat;
+            background-size: 300px;
+            position: relative;
+        }
+
+        #datetime {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 10px;
+            text-align: right;
+            background-color:rgba(66, 87, 33, 0.5);
+        }
+        #time {
+            font-size: 45px;
+            font-weight: bold;
+            margin-bottom: 3px;
+            margin-top: 3px;
+            line-height: 1;
+            background-color:rgba(0, 0, 0, 0);
+            border-radius: 5px;
+            padding: 5px;
+            color:white;
+        }
+        #date {
+            font-size: 20px;
+            background-color:rgba(0, 0, 0, 0);
+            color:white;
+        }
+        button {
+        padding: 25px 35px;
+        margin: 10px;
+        background-color: #1F3607;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 18px;
+        }
+        button:hover {
+        background-color: #3B5F24;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <button onclick="redirectTodayPage()">Ziua curentă</button>
+    <button onclick="redirectWeeklyPage()">Săptămânal</button>
+    <button onclick="redirectMonthlyPage()">Lunar</button>
+    <button onclick="redirectAnnualPage()">Anual</button>
+
+</div>
+
+<div id="datetime">
+    <div id="time"></div>
+    <div id="date"></div>
+</div>
+
+<script>
+console.log("i'm here1");
+
+    function redirectTodayPage() {
+      window.location.href = "/today";
+    }
+
+    function redirectWeeklyPage() {
+      window.location.href = "/weekly";
+    }
+     function redirectMonthlyPage() {
+      window.location.href = "/monthly";
+    }
+
+    function redirectAnnualPage() {
+      window.location.href = "/annual";
+    }
+
+
+        function updateTime() {
+            const timeContainer = document.getElementById('time');
+            const dateContainer = document.getElementById('date');
+            const now = new Date();
+
+            const optionsTime = {
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric'
+            };
+
+            const optionsDate = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+
+            const formattedTime = now.toLocaleTimeString('en-US', optionsTime);
+            const formattedDate = now.toLocaleDateString('en-US', optionsDate);
+
+            timeContainer.innerHTML = formattedTime;
+            dateContainer.innerHTML = formattedDate;
+        }
+
+        updateTime(); // Actualizăm data și ora inițial
+
+        setInterval(updateTime, 1000); // Actualizăm data și ora în timp real
+
+
+</script>
+</body>
+</html>

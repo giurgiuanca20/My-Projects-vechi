@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Azi</title>
+    <style>
+            body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+             background: url('https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/387507936_312939314886790_1301291974383262452_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=zlj2C0iFxRgAX_h-emV&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTIngEyQZO1ULAVqtAc1DOKCQxxl6zfnlsMKNZY0k2bZA&oe=65C36FC1');
+           background-repeat: repeat;
+            background-size: 300px;
+        }
+
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            #rectContainer {
+               position: absolute;
+                top: 50px;
+                left: 270px;
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .rectContent {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                margin-top: 10px;
+
+            }
+
+            .sideBar {
+                position: fixed;
+                left: 5px;
+                top: 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-right: 40px;
+                max-height: calc(100vh - 10px);
+                overflow-y: auto; // Adaugă scroll pe axa Y
+            }
+            .sideBar img {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 20px;
+                cursor: pointer;
+            }
+            .sideBar {
+                margin-right: 20px;
+            }
+            .sideBar::-webkit-scrollbar {
+             width: 10px;
+            }
+
+            .sideBar::-webkit-scrollbar-track {
+              background-color:#425721;
+            }
+
+            .sideBar::-webkit-scrollbar-thumb {
+              background-color: #1F3607;
+              border-radius: 5px;
+            }
+            .rectSection {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                border: 2px solid background-color:#425721;
+                border-radius: 10px;
+                margin-top: 20px;
+                background-color:rgba(66, 87, 33, 0.7);
+                width: 100%;
+                height: 100px;
+                cursor: pointer;
+            }
+            .rectSection:hover {
+            background-color:rgba(59, 95, 36, 0.7);
+            }
+            .textArea {
+                width: calc(100% - 170px);
+                padding: 10px;
+                font-size: 16px;
+                border-radius: 5px;
+                resize: none;
+
+                color:#FFFFFF;
+                background-color:rgba(0, 0, 0, 0)
+            }
+
+            input[type="time"] {
+              width: 150px;
+              font-size: 16px;
+              margin-left: 20px;
+              background-color:rgba(0, 0, 0, 0);
+              color: white;
+              border: none;
+              padding: 5px;
+            }
+
+            input[type="time"]::-webkit-calendar-picker-indicator {
+              filter: invert(1); // Schimbă culoarea iconului în alb
+              margin-left: 5px;
+              width: 25px;
+              height: 25px;
+            }
+            .container {
+                align-items: flex-start; //Aliniem side-bar la stanga
+            }
+            .rectContent img {
+                width: 40px;
+                height: 40px;
+                margin-right: 20px;
+                background-color:rgba(0, 0, 0, 0);
+            }
+
+           button {
+           position: fixed;
+           padding: 25px 35px;
+           background-color: #1F3607;
+           color: white;
+           border: none;
+           border-radius: 25px;
+           cursor: pointer;
+           transition: background-color 0.3s ease;
+           font-size: 18px;
+           }
+            button:hover {
+            background-color: #3B5F24;
+            }
+
+            .selected {
+             border: 2px solid white; /* Exemplu: Schimbă stilul dreptunghiului atunci când este selectat */
+            }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="sideBar" onclick="createRectangle(event)">
+        <img alt="Image 1"
+             src="https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/377293032_289608610727527_2705901521561589180_n.png?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=bPqw_AtpeYMAX8_HO_p&_nc_ht=scontent.fotp3-1.fna&oh=03_AdQ1-dJUdVKdggC752Eg1ZSe0gjfjtZ2WZNaaRvr9esVnA&oe=65C3645E">
+        <img alt="Image 2"
+             src="https://scontent.fotp3-4.fna.fbcdn.net/v/t1.15752-9/375769825_872939330820179_7515084832423563814_n.png?_nc_cat=100&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=yX24FfAULAwAX_7pScR&_nc_ht=scontent.fotp3-4.fna&oh=03_AdRJZVEHWLyl82fYHLqmRCsTUeUhAqPS3tuMLrV7KH66BA&oe=65C37D8E">
+        <img alt="Image 3"
+             src="https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/370216370_201541619590004_7829816301400091354_n.png?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=bkSKZOCaTLkAX90IFxt&_nc_ht=scontent.fotp3-1.fna&oh=03_AdR2s1BBoEXC31DRwIufa9toiMbubXUSQFu_pdfwfC8yzA&oe=65C37222">
+        <img alt="Image 4"
+             src="https://scontent.fotp3-4.fna.fbcdn.net/v/t1.15752-9/405417768_1567911363947135_8873323402961535612_n.png?_nc_cat=110&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=i1I2sV7iQVIAX8Y4JV9&_nc_ht=scontent.fotp3-4.fna&oh=03_AdSwtbcYkxplSQCqOhjzT2WaFyTOenFxONColCrXRI4IaA&oe=65C382F8">
+        <img alt="Image 5"
+             src="https://scontent.fotp3-2.fna.fbcdn.net/v/t1.15752-9/403634770_854961069745812_7338640043148132381_n.png?_nc_cat=105&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=usaHWVcZKeEAX9J1txS&_nc_ht=scontent.fotp3-2.fna&oh=03_AdTsez0Jn8rnoYw1qqJ8UNFa7bXeIHJvNzbNB5JImOkZtg&oe=65C37C17">
+        <img alt="Image 6"
+             src="https://scontent.fotp3-3.fna.fbcdn.net/v/t1.15752-9/403632767_889166532602321_631935753967807392_n.png?_nc_cat=102&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=OV6ABOAlAjgAX-tMvIK&_nc_ht=scontent.fotp3-3.fna&oh=03_AdSb0vKvnWE3KhFyPMQAMVfU3WfKi3be3RUWHkPexBxGRA&oe=65C37F37">
+        <img alt="Image 7"
+             src="https://scontent.fotp3-2.fna.fbcdn.net/v/t1.15752-9/401054331_865879365026922_8113514698137651894_n.png?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=form4KtMgnAAX8DQML3&_nc_ht=scontent.fotp3-2.fna&oh=03_AdQBRZynJnG1EdV2D6PCc0EV23K2m-lD9WQqqhqC0AdiVw&oe=65C370E4">
+        <img alt="Image 8"
+             src="https://scontent.fotp3-4.fna.fbcdn.net/v/t1.15752-9/401034547_256533757407033_3045070366275408984_n.png?_nc_cat=108&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=AIYTfxItgdcAX9FaA9E&_nc_ht=scontent.fotp3-4.fna&oh=03_AdRyWvj9U2fgontACn7uSdJRF43cAIu7YMmTGw7uCS2vmg&oe=65C385B3">
+        <img alt="Image 9"
+             src="https://scontent.fotp3-4.fna.fbcdn.net/v/t1.15752-9/400776645_282673271424963_7204500933024473164_n.png?_nc_cat=100&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=Z6RdN83vRGYAX9pFDG7&_nc_ht=scontent.fotp3-4.fna&oh=03_AdQggDkAR8f6MKuSXzFXnpsxa0p4BVLeMRtVaO0qNPa8sw&oe=65C39326">
+        <img alt="Image 10"
+             src="https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/400772948_676543714588693_6304087547613772723_n.png?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=xfhW9DRjRpIAX-0wbaj&_nc_oc=AQntLXdkhWbDkhUynyWBt2cjp_-ayvyIZNewRLWV78cJ9fM_s-kkaoRF457XBfpDSYc&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTvN3lXEcbZtmxZs70G0WQcUiMZFO31tEo3XU2NnFknXA&oe=65C368BF">
+        <img alt="Image 11"
+             src="https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/400724858_1033395547994454_3713841701464197053_n.png?_nc_cat=107&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=PnE4hWOaVisAX_UAtEI&_nc_ht=scontent.fotp3-1.fna&oh=03_AdT_BKWsSqrX3QgEBt7zjfulK57phR5v6YfGsVDJOeonew&oe=65C36FEF">
+        <img alt="Image 12"
+             src="https://scontent.fotp3-2.fna.fbcdn.net/v/t1.15752-9/398503134_3788054441428677_8385713595052491955_n.png?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=YaNfpnz-zOUAX_PyATo&_nc_ht=scontent.fotp3-2.fna&oh=03_AdROlg7fJwcxNzvGT6b-dYNzdvy0TT7dYZRPdV_wNh6EDQ&oe=65C37F01">
+        <img alt="Image 13"
+             src="https://scontent.fotp3-2.fna.fbcdn.net/v/t1.15752-9/398503126_244181415343126_4895404105679044588_n.png?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=-TWn1ITKs7gAX_6_aKy&_nc_ht=scontent.fotp3-2.fna&oh=03_AdTmfCcrL3nzybDLotld0MxGIxEW5YFP3zSt5d5GxEhoAA&oe=65C3920B">
+        <img alt="Image 14"
+             src="https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/398400708_1003097907467957_1531180905613105725_n.png?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=SeorijdaOBwAX9OZ4jJ&_nc_ht=scontent.fotp3-1.fna&oh=03_AdT6m0rLJGX2Eg_R6NckEEAPA3kcJi2FO8iSQUGPuy6HMw&oe=65C37162">
+        <img alt="Image 15"
+             src="https://scontent.fotp3-3.fna.fbcdn.net/v/t1.15752-9/386898144_899146468219092_2957918978778832438_n.png?_nc_cat=102&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=ksHEq1UnVDMAX9T1_TL&_nc_ht=scontent.fotp3-3.fna&oh=03_AdS4Q78oM3C0JETupAlWAdmdSOj3UiYpGzPuZCnRq3piHw&oe=65C375E4">
+    </div>
+
+    <div id="rectContainer"></div>
+    <button onclick="save()" style="bottom: 20px; right: 160px;">Salveaza</button>
+
+    <button onclick="deleteSelectedRectangles()" style="bottom: 20px; right: 20px;">Sterge</button>
+
+</div>
+
+
+<script>
+
+    function createRectangle(event) {
+        const clickedImage = event.target;
+        if (clickedImage.tagName === 'IMG') {
+            const rectContainer = document.getElementById('rectContainer');
+            const rectDiv = document.createElement('div');
+            rectDiv.classList.add('rectSection');
+
+            const rectContent = document.createElement('div');
+            rectContent.classList.add('rectContent');
+
+            const img = clickedImage.cloneNode(true);
+            rectContent.appendChild(img);
+
+            const textArea = document.createElement('textarea');
+            textArea.classList.add('textArea');
+            textArea.placeholder = 'Scrie ceva...';
+
+            const timeInput = document.createElement('input');
+            timeInput.type = 'time';
+            timeInput.name = 'timeInterval';
+            timeInput.min = '00:00';
+            timeInput.max = '24:00';
+
+            rectContent.appendChild(textArea);
+            rectContent.appendChild(timeInput);
+
+            rectDiv.appendChild(rectContent);
+            rectContainer.appendChild(rectDiv);
+            rectDiv.classList.add('new-rectangle');
+
+    // Adaugă un event listener pentru selectarea/deselectarea dreptunghiului
+    rectDiv.addEventListener('click', function() {
+        rectDiv.classList.toggle('selected');
+    });
+        }
+    }
+
+
+
+
+
+  function save() {
+    const newRectangles = document.querySelectorAll('.new-rectangle');
+    const dataToSend = [];
+
+    newRectangles.forEach(rectangle => {
+        const img = rectangle.querySelector('img');
+        const imageName = img.alt;
+        const text = rectangle.querySelector('textarea').value;
+        const time = rectangle.querySelector('input[type="time"]').value;
+
+        dataToSend.push({ image: imageName, text: text, hour: time });
+    });
+
+    fetch('/saveData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+    })
+    .catch(error => {
+         console.error('Eroare:', error);
+    });
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/getIdAccountValue')
+        .then(response => response.json())
+        .then(data => {
+            displayTodayData(data); // Transmite valoarea primită în funcția displayTodayData
+        })
+        .catch(error => {
+            console.error('Eroare:', error);
+        });
+});
+
+
+
+
+
+function displayTodayData(idAccount) {
+    fetch(`/getTodayData/${idAccount}`)
+        .then(response => response.json())
+        .then(data => {
+            const rectContainer = document.getElementById('rectContainer');
+            rectContainer.innerHTML = ''; // Curăță conținutul anterior
+
+            data.forEach(item => {
+                const rectDiv = document.createElement('div');
+                rectDiv.classList.add('rectSection');
+
+                const rectContent = document.createElement('div');
+                rectContent.classList.add('rectContent');
+
+                // Caută imaginea după numele corespunzător
+                const img = document.querySelector(`.sideBar img[alt="${item.image}"]`);
+                if (img) {
+                    const clonedImg = img.cloneNode(true);
+                    rectContent.appendChild(clonedImg);
+                } else {
+                    // Înlocuiește cu o imagine default sau altceva în cazul în care nu se găsește imaginea
+                    const defaultImg = document.createElement('img');
+                    defaultImg.src = 'calea/catre/imaginea-default.jpg';
+                    rectContent.appendChild(defaultImg);
+                }
+
+                const textArea = document.createElement('textarea');
+                textArea.classList.add('textArea');
+                textArea.value = item.text; // Sau folosește alt atribut din obiectul item
+
+                const timeInput = document.createElement('input');
+                timeInput.type = 'time';
+                timeInput.name = 'timeInterval';
+                timeInput.value = item.hour; // Sau folosește alt atribut din obiectul item
+
+                rectContent.appendChild(textArea);
+                rectContent.appendChild(timeInput);
+
+                rectDiv.appendChild(rectContent);
+                rectContainer.appendChild(rectDiv);
+                    // Adaugă un event listener pentru selectarea/deselectarea dreptunghiului
+    rectDiv.addEventListener('click', function() {
+        rectDiv.classList.toggle('selected');
+    });
+            });
+        })
+        .catch(error => {
+            console.error('Eroare:', error);
+        });
+}
+
+
+function getDayOfWeek() {
+    const days = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă'];
+    const currentDate = new Date();
+    const dayOfWeek = days[currentDate.getDay()];
+    return dayOfWeek;
+}
+
+
+function sendDayOfWeek() {
+    const dayOfWeek = getDayOfWeek(); // Obține ziua săptămânii din funcția existentă
+
+    // Trimite ziua săptămânii către server folosind POST
+    fetch('/saveDayOfWeek', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dayOfWeek) // Trimite direct string-ul cu numele zilei
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Ziua săptămânii a fost trimisă către server.');
+        } else {
+            console.error('Eroare la trimiterea zilei săptămânii către server.');
+        }
+    })
+    .catch(error => {
+        console.error('Eroare:', error);
+    });
+}
+
+function getDayOfMonth() {
+    const date = new Date();
+    return date.getDate(); // Returnează ziua din lună
+}
+
+function sendDayOfMonth() {
+    const dayOfMonth = getDayOfMonth(); // Obține ziua din lună din funcția nouă
+
+    // Trimite ziua din lună către server folosind POST
+    fetch('/saveDayOfMonth', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dayOfMonth) // Trimite direct ziua din lună sub formă de număr
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Ziua din lună a fost trimisă către server.');
+        } else {
+            console.error('Eroare la trimiterea zilei din lună către server.');
+        }
+    })
+    .catch(error => {
+        console.error('Eroare:', error);
+    });
+}
+
+// Trimiterea automată a zilei săptămânii la încărcarea paginii
+document.addEventListener('DOMContentLoaded', function() {
+    sendDayOfWeek();
+    sendDayOfMonth();
+});
+
+
+function deleteSelectedRectangles() {
+console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+    const selectedRectangles = document.querySelectorAll('.rectSection.selected');
+    const dataToDelete = [];
+
+    selectedRectangles.forEach(rectangle => {
+        const img = rectangle.querySelector('img');
+        const imageName = img.alt;
+        const text = rectangle.querySelector('textarea').value;
+        const time = rectangle.querySelector('input[type="time"]').value;
+
+        dataToDelete.push({ image: imageName, text: text, hour: time });
+        rectangle.remove();
+    });
+    // Trimite datele către controller pentru ștergere
+    fetch('/deleteData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToDelete)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Datele au fost șterse cu succes.');
+            // Reîncarcă pagina după ștergere
+            window.location.reload();
+        } else {
+            console.error('Eroare la ștergerea datelor.');
+        }
+    })
+    .catch(error => {
+        console.error('Eroare:', error);
+    });
+}
+
+
+
+</script>
+</body>
+</html>

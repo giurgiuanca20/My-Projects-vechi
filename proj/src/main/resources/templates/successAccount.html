@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cont creat cu succes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/387507936_312939314886790_1301291974383262452_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=zlj2C0iFxRgAX_h-emV&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTIngEyQZO1ULAVqtAc1DOKCQxxl6zfnlsMKNZY0k2bZA&oe=65C36FC1');
+            background-repeat: repeat;
+            background-size: 300px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color:rgba(66, 87, 33, 0.7);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: white;
+        }
+
+        p {
+            color:white;
+            margin-bottom: 20px;
+        }
+        button {
+          width: calc(100% - 20px);
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #1F3607;
+          border-radius: 3px;
+          background-color:#1F3607;
+          color: white;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        button:hover {
+          background-color: #3B5F24;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Cont creat cu succes!</h2>
+    <p>Contul tău a fost creat cu succes. Poți să te autentifici acum.</p>
+    <button onclick="redirectLogIn()">Autentificare</button>
+</div>
+
+<script>
+        function redirectLogIn() {
+            window.location.href = "/account/login";
+        }
+</script>
+</body>
+</html>

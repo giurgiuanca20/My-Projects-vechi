@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Creează Cont Nou</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/387507936_312939314886790_1301291974383262452_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=zlj2C0iFxRgAX_h-emV&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTIngEyQZO1ULAVqtAc1DOKCQxxl6zfnlsMKNZY0k2bZA&oe=65C36FC1');
+            background-repeat: repeat;
+            background-size: 300px;
+        }
+
+        .signup-container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color:rgba(66, 87, 33, 0.7);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .signup-container h2 {
+            text-align: center;
+            color:white;
+        }
+        .signup-container input[type="text"],
+        .signup-container input[type="email"],
+        .signup-container input[type="date"],
+        .signup-container input[type="password"]{
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        button {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #1F3607;
+        border-radius: 3px;
+        background-color:#1F3607;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        }
+        button:hover {
+        background-color: #3B5F24;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+    <h2>Creează Cont Nou</h2>
+    <form id="signupForm">
+        <input name="username" placeholder="Nume utilizator" required type="text"><br>
+        <input id="password" name="password" placeholder="Parolă" required type="password"><br>
+        <input name="firstName" placeholder="Prenume" required type="text"><br>
+        <input name="lastName" placeholder="Nume" required type="text"><br>
+        <input name="phoneNumber" placeholder="Număr de telefon" required type="text"><br>
+        <input id="birthDate" name="birthDate" required type="date"><br>
+        <input name="email" placeholder="Email" required type="email"><br>
+        <button type="submit">Creează Cont</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    redirectLogIn();
+});
+function redirectLogIn() {
+  var firstname = document.getElementsByName('firstName')[0].value;
+  var lastname = document.getElementsByName('lastName')[0].value;
+  var username = document.getElementsByName('username')[0].value;
+  var password = document.getElementsByName('password')[0].value;
+  var phoneNumber = document.getElementsByName('phoneNumber')[0].value;
+  var birthDate = document.getElementsByName('birthDate')[0].value;
+  var email = document.getElementsByName('email')[0].value;
+
+  fetch('/account/signUp', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      firstname: firstname,
+      lastname: lastname,
+      username: username,
+      password: password,
+      phoneNumber: phoneNumber,
+      birthDate: birthDate,
+      email: email
+    })
+  })
+   .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        window.location.href = "successAccount";
+    })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Calendar Anual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: url('https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/387507936_312939314886790_1301291974383262452_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=zlj2C0iFxRgAX_h-emV&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTIngEyQZO1ULAVqtAc1DOKCQxxl6zfnlsMKNZY0k2bZA&oe=65C36FC1');
+            background-repeat: repeat;
+            background-size: 300px;
+            text-align: center;
+        }
+        #calendar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .month {
+            border: 2px solid background-color:#425721;
+            border-radius: 5px;
+            padding: 10px;
+            background-color:rgba(66, 87, 33, 0.7);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+        .month-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: white;
+        }
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            color:white;
+        }
+        .day {
+            border: 1px solid #5D9235;
+            padding: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .day:hover {
+            background-color:rgba(59, 95, 45, 0.7);
+        }
+        .day.selected {
+            background-color:rgba(65, 95, 50, 1);
+        }
+        #eventInput {
+            display: none;
+            margin-top: 20px;
+        }
+        #eventText {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .eventRectangle {
+            position: absolute;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        #year {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1><span id="year"></span></h1>
+</div>
+
+<div id="calendar"></div>
+
+<script>
+// Găsește elementul în care va fi afișat anul curent
+const yearElement = document.getElementById('year');
+
+// Obține anul curent și actualizează textul din interiorul elementului
+const year = new Date().getFullYear();
+yearElement.textContent = year;
+console.log(year);
+
+
+
+    const calendar = document.getElementById('calendar');
+    const eventInput = document.getElementById('eventInput');
+    const eventText = document.getElementById('eventText');
+    const eventRectangle = document.createElement('div');
+    eventRectangle.className = 'eventRectangle';
+    document.body.appendChild(eventRectangle);
+    let selectedDay;
+
+    const months = [
+        'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
+        'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'
+    ];
+
+
+
+    for (let month = 0; month < 12; month++) {
+        const monthDiv = document.createElement('div');
+        monthDiv.className = 'month';
+
+        const monthTitle = document.createElement('div');
+        monthTitle.className = 'month-title';
+        monthTitle.innerText = months[month];
+        monthDiv.appendChild(monthTitle);
+
+        const daysDiv = document.createElement('div');
+        daysDiv.className = 'days';
+
+        for (let day = 1; day <= 31; day++) {
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'day';
+            dayDiv.innerText = day;
+            dayDiv.onclick = function() {
+                if (selectedDay) {
+                    selectedDay.classList.remove('selected');
+                }
+                selectedDay = dayDiv;
+                dayDiv.classList.add('selected');
+                eventInput.style.display = 'block';
+
+                // Afiseaza dreptunghiul de eveniment
+                eventRectangle.style.display = 'block';
+                const dayRect = dayDiv.getBoundingClientRect();
+                eventRectangle.style.top = `${dayRect.top + window.scrollY}px`;
+                eventRectangle.style.left = `${dayRect.left + window.scrollX}px`;
+            };
+            daysDiv.appendChild(dayDiv);
+        }
+
+        monthDiv.appendChild(daysDiv);
+        calendar.appendChild(monthDiv);
+    }
+
+    function addEvent() {
+        if (selectedDay) {
+            selectedDay.innerText = selectedDay.innerText + '\n' + eventText.value;
+            eventText.value = '';
+            eventInput.style.display = 'none';
+            eventRectangle.style.display = 'none';
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In</title>
+  <style>
+        body {
+           background: url('https://scontent.fotp3-1.fna.fbcdn.net/v/t1.15752-9/387507936_312939314886790_1301291974383262452_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_ohc=zlj2C0iFxRgAX_h-emV&_nc_ht=scontent.fotp3-1.fna&oh=03_AdTIngEyQZO1ULAVqtAc1DOKCQxxl6zfnlsMKNZY0k2bZA&oe=65C36FC1');
+            background-repeat: repeat;
+            background-size: 300px;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color:rgba(66, 87, 33, 0.7);
+           border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Umbră */
+        }
+        .login-container h2 {
+            text-align: center;
+             color:white;
+        }
+        .login-container input[type="text"],
+        .login-container input[type="password"]{
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        button {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #1F3607;
+        border-radius: 3px;
+        background-color:#1F3607;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        }
+        button:hover {
+        background-color: #3B5F24;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+  <h2>Autentificare</h2>
+
+  <form id="loginForm"action="/logIn" method="post">
+    <input type="text" name="username" placeholder="Nume utilizator" required><br>
+    <input type="password" name="password" placeholder="Parolă" required><br>
+  </form>
+
+  <button onclick="redirectChoice()" >Conectare</button>
+  <button onclick="redirectSignUp()" >Creează un cont nou</button>
+</div>
+
+<script>
+        function redirectSignUp() {
+            window.location.href = "signUp";
+        }
+function goToChoice() {
+  var token = localStorage.getItem('jwtToken');
+  console.log("myToken is: " + token);
+
+fetch('/choice  ', {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.text(); // If you're expecting HTML content
+  })
+  .then(html => {
+    document.body.innerHTML = html; // Update the page with the protected content
+    history.pushState(null, null, '/choice');
+  })
+  .catch(error => {
+    console.error('Error fetching protected page:', error);
+  });
+
+}
+function redirectChoice() {
+    var username = document.getElementsByName('username')[0].value;
+    var password = document.getElementsByName('password')[0].value;
+
+    fetch('/account/toChoice', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username,
+            password: password,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        localStorage.setItem('jwtToken', data.token);
+            window.location.pathname = "/choice";
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+</script>
+
+</body>
+</html>
