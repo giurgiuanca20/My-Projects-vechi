@@ -1,0 +1,22 @@
+This Java code constitutes a basic polynomial operations calculator with a graphical user interface (GUI).
+
+Polynomial Operations (org.example.Operation):
+The Operations class contains methods for polynomial addition, subtraction, multiplication, division, differentiation, and integration.
+Each operation takes two polynomial inputs (Polinom objects) and returns the result as a Polinom object.
+The implementation includes handling edge cases like division by zero and maintaining the order of terms in the polynomials.
+
+Polynomial Representation (org.example.Polynmial):
+Monom represents a single term in a polynomial, storing its coefficient and power.
+Polinom represents a polynomial as a collection of monomials. It uses a TreeMap to ensure that monomials are ordered by their power.
+It provides methods for adding monomials, getting the degree of the polynomial, retrieving the maximum monomial, and converting the polynomial to a string.
+
+Graphical User Interface (org.example.GUI):
+The GUI is built using Swing components.
+View class extends JFrame and sets up the main window for the application. It contains labels, text fields, and buttons for input and output.
+The Controller class acts as the event handler for the GUI components. It processes user actions such as button clicks and delegates the corresponding polynomial operations to the Operations class.
+parseMonom and parsePolinom functions are utility methods to parse user input strings into polynomial objects.
+
+Main Application Entry Point:
+The main application entry point creates an instance of the View class, initializing the GUI and starting the application.
+
+Overall, this code provides a user-friendly interface for performing basic polynomial operations, making it easier for users to manipulate polynomials without needing to understand the underlying mathematical operations.
