@@ -1,0 +1,30 @@
+View (GUI class):
+This class represents the graphical user interface (GUI) of an application.
+It uses Swing components like JFrame, JPanel, JButton, JLabel, JRadioButton, JTabbedPane, and JTable to create the UI elements.
+The prepareGui() method sets up the initial layout and components of the GUI.
+It has methods for creating buttons, labels, radio buttons, and handling user input.
+There are methods to set various properties of the UI components, such as text, icons, background color, and action commands.
+It includes functionality for switching between different panels using a tabbed pane.
+The scrieInTabel() method populates a table with data based on certain conditions.
+Overall, this class is responsible for presenting the application's interface to the user.
+
+Controller (Controller class):
+This class serves as the controller in the Model-View-Controller (MVC) design pattern.
+It acts as an intermediary between the model (data) and the view (GUI).
+It handles user input events and delegates appropriate actions to the model or updates the view accordingly.
+The controller typically contains event listeners for UI components and defines corresponding event handling methods.
+It may interact with other components of the application, such as databases or external services, to fulfill user requests.
+In this context, it likely contains methods to handle actions triggered by user interactions with the GUI components defined in the View class.
+
+Connect (Database Connection class):
+This class is responsible for establishing a connection to a database.
+It typically includes methods to connect to the database, execute queries, and perform other database-related operations.
+It may utilize JDBC (Java Database Connectivity) or another database access technology to interact with the database.
+The class may also handle exceptions related to database connectivity and resource management (e.g., closing connections).
+
+Model (Data Model class):
+The model represents the data and business logic of the application.
+It encapsulates the application's data structures, state, and behavior.
+The model may include classes for entities, data access objects (DAOs), business logic components, and data manipulation operations.
+It interacts with the database through the Connect class to retrieve and manipulate data.
+The model notifies the controller or view of changes in the data, enabling them to update the UI or perform other actions accordingly.
