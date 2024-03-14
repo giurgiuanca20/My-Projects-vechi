@@ -1,0 +1,37 @@
+This Java code is a simulation of a queuing system. Below is a description of each component and its functionality:
+
+Main class (Main.java):
+Reads input parameters such as time limit, maximum and minimum service times, maximum and minimum arrival times, number of queues, and number of clients.
+Creates a SimulationManager instance with the provided parameters and starts a new thread to run the simulation.
+
+SimulationManager class (SimulationManager.java):
+Manages the overall simulation process.
+Initializes a RandomGenerator to generate clients with random arrival and service times.
+Creates a Scheduler instance and sets the scheduling strategy.
+Runs the simulation loop until the time limit is reached.
+Manages the arrival and departure of clients, updates statistics, and writes output to a file.
+
+Scheduler class (Scheduler.java):
+Manages multiple queues.
+Allows changing the scheduling strategy.
+Dispatches clients to the appropriate queue based on the selected strategy.
+
+ConcreteStrategyTime class (ConcreteStrategyTime.java):
+Implements a scheduling strategy where clients are added to the queue with the shortest waiting time.
+
+QueueClass class (QueueClass.java):
+Represents a queue in the system.
+Runs as a separate thread.
+Keeps track of clients in the queue, their waiting times, and handles client removal.
+Provides methods to add, remove, and get clients from the queue.
+
+Client class (Client.java):
+Represents a client in the simulation with an ID, arrival time, and service time.
+
+RandomGenerator class (RandomGenerator.java):
+Generates a specified number of clients with random arrival and service times.
+
+FileWriting class (FileWriting.java):
+Handles writing output to a file.
+
+Overall, this code simulates a queuing system where clients arrive, wait in queues, receive service, and depart. It allows for different scheduling strategies and provides statistical analysis of the simulation results.
