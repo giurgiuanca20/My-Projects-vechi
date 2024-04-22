@@ -14,7 +14,7 @@ public class Connect {
     public Connect() {
         this.url = "jdbc:postgresql://localhost:5432/postgres";
         this.user = "postgres";
-        this.password = "varanudorm";
+        this.password = "*********";
     }
     public static Connect getInstance() {
         if (instance == null) {
