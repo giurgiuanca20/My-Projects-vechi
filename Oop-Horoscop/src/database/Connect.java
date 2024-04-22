@@ -17,7 +17,7 @@ public class Connect {
     public Connect(String tableName) {
         this.url ="jdbc:postgresql://localhost:5432/postgres";
         this.user ="postgres";
-        this.password ="varanudorm";
+        this.password ="*********";
         this.tableName = tableName;
     }
 
